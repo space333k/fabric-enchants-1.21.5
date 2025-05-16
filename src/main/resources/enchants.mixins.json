@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "package": "net.space333.enchants.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "anvil.AnvilScreenHandlerMixin",
+    "enchantments.EnchantBookFactoryMixin",
+    "enchantments.EnchantmentHelperMixin",
+    "enchantments.EnchantmentMixin",
+    "enchantments.EnchantmentScreenHandlerMixin",
+    "enchantments.EnchantRandomlyLootFunctionMixin",
+    "enchantments.ItemGroupMixin",
+    "enchantments.SetEnchantmentsLootFunctionMixin",
+    "smithing.SmithingScreenHandlerMixin",
+    "upgrades.ItemStackMixin",
+    "upgrades.LivingEntityMixin",
+    "upgrades.PlayerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": [
+    "minecraft:golden_axe",
+    "minecraft:iron_axe",
+    "minecraft:netherite_axe",
+    "minecraft:stone_axe",
+    "minecraft:wooden_axe"
+  ],
+  "addition": [
+    "minecraft:gold_ingot"
+  ],
+  "result": {
+    "id": "minecraft:diamond_axe",
+    "count": 1
+  }
+}

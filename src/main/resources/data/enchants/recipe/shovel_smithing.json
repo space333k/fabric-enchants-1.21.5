@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": [
+    "minecraft:golden_shovel",
+    "minecraft:iron_shovel",
+    "minecraft:netherite_shovel",
+    "minecraft:stone_shovel",
+    "minecraft:wooden_shovel"
+  ],
+  "addition": [
+    "minecraft:gold_ingot"
+  ],
+  "result": {
+    "id": "minecraft:diamond_shovel",
+    "count": 1
+  }
+}
