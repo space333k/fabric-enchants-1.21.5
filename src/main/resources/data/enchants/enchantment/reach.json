@@ -1,0 +1,20 @@
+{
+  "description": {
+    "translate": "enchantment.enchants.reach"
+  },
+  "supported_items": "#minecraft:enchantable/mining",
+  "weight": 3,
+  "max_level": 3,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 15
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 15
+  },
+  "anvil_cost": 2,
+  "slots": [
+    "mainhand"
+  ]
+}

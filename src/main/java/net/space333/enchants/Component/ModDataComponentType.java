@@ -16,10 +16,6 @@ public class ModDataComponentType {
     public static final ComponentType<Integer> EFFICIENCY = register("efficiency",builder -> builder.codec(Codecs.POSITIVE_INT).packetCodec(PacketCodecs.VAR_INT));
     public static final ComponentType<Integer> PROTECTION = register("protection",builder -> builder.codec(Codecs.POSITIVE_INT).packetCodec(PacketCodecs.VAR_INT));
     public static final ComponentType<Integer> SHARPNESS = register("sharpness",builder -> builder.codec(Codecs.POSITIVE_INT).packetCodec(PacketCodecs.VAR_INT));
-    public static final ComponentType<Integer> POWER = register("power",builder -> builder.codec(Codecs.POSITIVE_INT).packetCodec(PacketCodecs.VAR_INT));
-    public static final ComponentType<Integer> IMPALING = register("impaling",builder -> builder.codec(Codecs.POSITIVE_INT).packetCodec(PacketCodecs.VAR_INT));
-    public static final ComponentType<Integer> DENSITY = register("density",builder -> builder.codec(Codecs.POSITIVE_INT).packetCodec(PacketCodecs.VAR_INT));
-
 
 
     private  static <T>ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {

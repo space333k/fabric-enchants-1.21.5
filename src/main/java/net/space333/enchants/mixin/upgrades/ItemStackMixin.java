@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -19,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
 import java.util.function.Consumer;
@@ -43,6 +45,26 @@ public abstract class ItemStackMixin {
         return damage;
     }
 
+    @Inject(method = "canRepairWith", at = @At(value = "HEAD"), cancellable = true)
+    private void addRepairIngredient(ItemStack ingredient, CallbackInfoReturnable<Boolean> cir) {
+        ItemStack self = ((ItemStack) (Object) this);
+        if(ingredient.getItem() == Items.STRING) {
+            if(self.getItem() == Items.BOW || self.getItem() == Items.CROSSBOW || self.getItem() == Items.FISHING_ROD) {
+                cir.setReturnValue(true);
+            }
+        }
+        else if(ingredient.getItem() == Items.PRISMARINE_SHARD) {
+            if(self.getItem() == Items.TRIDENT) {
+                cir.setReturnValue(true);
+            }
+        }
+        else if(ingredient.getItem() == Items.BLACKSTONE) {
+            if(self.getItem() == Items.MACE) {
+                cir.setReturnValue(true);
+            }
+        }
+    }
+
     @Inject(method = "appendTooltip", at = @At(value = "TAIL"))
     private void addUpgrades(
             Item.TooltipContext context,
@@ -56,26 +78,17 @@ public abstract class ItemStackMixin {
         if(self.contains(ModDataComponentType.UNBREAKING)) {
             int level = Upgrade.getUnbreaking(self);
             if(level > 0) {
-                textConsumer.accept(Text.literal("Unbreaking " + Upgrade.getUnbreaking(self)).formatted(Formatting.DARK_BLUE));
+                textConsumer.accept(Text.literal("Unbreaking " + Upgrade.getUnbreaking(self)).formatted(Formatting.DARK_GREEN));
             }
         }
         if(self.contains(ModDataComponentType.EFFICIENCY)) {
-            textConsumer.accept(Text.literal("Efficiency  " + Upgrade.getEfficiency(self)).formatted(Formatting.DARK_BLUE));
+            textConsumer.accept(Text.literal("Efficiency " + Upgrade.getEfficiency(self)).formatted(Formatting.DARK_GREEN));
         }
         if(self.contains(ModDataComponentType.PROTECTION)) {
-            textConsumer.accept(Text.literal("Protection " + Upgrade.getProtection(self)).formatted(Formatting.DARK_BLUE));
+            textConsumer.accept(Text.literal("Protection " + Upgrade.getProtection(self)).formatted(Formatting.DARK_GREEN));
         }
         if(self.contains(ModDataComponentType.SHARPNESS)) {
-            textConsumer.accept(Text.literal("Sharpness " + Upgrade.getSharpness(self)).formatted(Formatting.DARK_BLUE));
-        }
-        if(self.contains(ModDataComponentType.POWER)) {
-            textConsumer.accept(Text.literal("Power " + Upgrade.getPower(self)).formatted(Formatting.DARK_BLUE));
-        }
-        if(self.contains(ModDataComponentType.IMPALING)) {
-            textConsumer.accept(Text.literal("Impaling " + Upgrade.getImpaling(self)).formatted(Formatting.DARK_BLUE));
-        }
-        if(self.contains(ModDataComponentType.DENSITY)) {
-            textConsumer.accept(Text.literal("Density " + Upgrade.getDensity(self)).formatted(Formatting.DARK_BLUE));
+            textConsumer.accept(Text.literal("Sharpness " + Upgrade.getSharpness(self)).formatted(Formatting.DARK_GREEN));
         }
     }
 }

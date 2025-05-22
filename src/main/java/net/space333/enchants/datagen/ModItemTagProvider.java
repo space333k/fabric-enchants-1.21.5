@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.space333.enchants.util.ModTags;
 import org.jetbrains.annotations.Nullable;
@@ -20,12 +21,8 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         getOrCreateTagBuilder(ModTags.Items.UPGRADE_MATERIAL)
                 .add(Items.GOLD_INGOT)
                 .add(Items.IRON_INGOT)
-                .add(Items.AMETHYST_SHARD)
-                .add(Items.PRISMARINE_SHARD)
-                .add(Items.BLACKSTONE);
+                .add(Items.AMETHYST_SHARD);
 
-        getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS)
-                .add(Items.PRISMARINE_SHARD)
-                .add(Items.BLACKSTONE);
+
     }
 }

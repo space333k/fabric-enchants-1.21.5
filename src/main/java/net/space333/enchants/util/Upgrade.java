@@ -9,22 +9,21 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.util.Identifier;
 import net.space333.enchants.Component.ModDataComponentType;
-
-import java.util.UUID;
 
 public class Upgrade {
 
-    static int repair_amount_levelup = 1;
+    static int REPAIR_AMOUNT_TO_UPGRADE = 1;
+
+    static int MAX_LEVEL = 2;
 
     public static Integer getUnbreaking(ItemStack itemStack) {
         if(itemStack.contains(ModDataComponentType.UNBREAKING)) {
             int level = itemStack.getOrDefault(ModDataComponentType.UNBREAKING, 0);
-            if(level < repair_amount_levelup) {
+            if(level < REPAIR_AMOUNT_TO_UPGRADE) {
                 return 0;
             }
-            else if(level < 2*repair_amount_levelup) {
+            else if(level < 2* REPAIR_AMOUNT_TO_UPGRADE) {
                 return 1;
             }
             return 2;
@@ -35,18 +34,31 @@ public class Upgrade {
     }
 
     public static void setUnbreaking(ItemStack itemStack, int x) {
-        itemStack.set(ModDataComponentType.UNBREAKING, x);
+        if(x >= MAX_LEVEL * REPAIR_AMOUNT_TO_UPGRADE) {
+            x = MAX_LEVEL * REPAIR_AMOUNT_TO_UPGRADE;
+        }
+        if(x > 0) {
+            itemStack.set(ModDataComponentType.UNBREAKING, x);
+        }
+
     }
 
-    public static void incrementUnbreaking(ItemStack itemStack) {
+    public static boolean isMaxUnbreaking(ItemStack itemStack) {
+        return getUnbreaking(itemStack) >= MAX_LEVEL;
+    }
+
+    public static boolean incrementUnbreaking(ItemStack itemStack) {
         int level = itemStack.getOrDefault(ModDataComponentType.UNBREAKING, 0);
-        if(level >= 2*repair_amount_levelup) {
-            level = 2*repair_amount_levelup;
+        boolean success = false;
+        if(level >= MAX_LEVEL * REPAIR_AMOUNT_TO_UPGRADE) {
+            level = MAX_LEVEL * REPAIR_AMOUNT_TO_UPGRADE;
         }
         else {
             level++;
+            success = true;
         }
         setUnbreaking(itemStack, level);
+        return success;
     }
 
 
@@ -60,18 +72,26 @@ public class Upgrade {
     }
 
     public static void setEfficiency(ItemStack itemStack, int x) {
-        itemStack.set(ModDataComponentType.EFFICIENCY, x);
+        if(x >= MAX_LEVEL) {
+            x = MAX_LEVEL;
+        }
+        if(x > 0) {
+            itemStack.set(ModDataComponentType.EFFICIENCY, x);
+        }
     }
 
-    public static void incrementEfficiency(ItemStack itemStack) {
+    public static boolean incrementEfficiency(ItemStack itemStack) {
         int level = getEfficiency(itemStack);
-        if(level >= 2) {
-            level = 2;
+        boolean success = false;
+        if(level >= MAX_LEVEL) {
+            level = MAX_LEVEL;
         }
         else {
             level++;
+            success = true;
         }
         setEfficiency(itemStack, level);
+        return success;
     }
 
 
@@ -85,18 +105,26 @@ public class Upgrade {
     }
 
     public static void setProtection(ItemStack itemStack, int x) {
-        itemStack.set(ModDataComponentType.PROTECTION, x);
+        if(x >= MAX_LEVEL) {
+            x = MAX_LEVEL;
+        }
+        if(x > 0) {
+            itemStack.set(ModDataComponentType.PROTECTION, x);
+        }
     }
 
-    public static void incrementProtection(ItemStack itemStack) {
+    public static boolean incrementProtection(ItemStack itemStack) {
         int level = getProtection(itemStack);
-        if(level >= 2) {
-            level = 2;
+        boolean success = false;
+        if(level >= MAX_LEVEL) {
+            level = MAX_LEVEL;
         }
         else {
             level++;
+            success = true;
         }
         setProtection(itemStack, level);
+        return success;
     }
 
 
@@ -137,125 +165,42 @@ public class Upgrade {
     }
 
     public static void setSharpness(ItemStack itemStack, int x) {
-        itemStack.set(ModDataComponentType.SHARPNESS, x);
+        if(x >= MAX_LEVEL) {
+            x = MAX_LEVEL;
+        }
+        if(x > 0) {
+            itemStack.set(ModDataComponentType.SHARPNESS, x);
+        }
     }
 
-    public static void incrementSharpness(ItemStack itemStack) {
+    public static boolean incrementSharpness(ItemStack itemStack) {
         int level = getSharpness(itemStack);
-        if(level >= 2) {
-            level = 2;
+        boolean success = false;
+        if(level >= MAX_LEVEL) {
+            level = MAX_LEVEL;
         }
         else {
             level++;
             itemStack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, increaseComponent(itemStack));
+            success = true;
         }
         setSharpness(itemStack, level);
+        return success;
     }
 
-
-    public static Integer getPower(ItemStack itemStack) {
-        if(itemStack.contains(ModDataComponentType.POWER)) {
-            return itemStack.getOrDefault(ModDataComponentType.POWER, 0);
-        }
-        else {
-            return 0;
-        }
-    }
-
-    public static void setPower(ItemStack itemStack, int x) {
-        itemStack.set(ModDataComponentType.POWER, x);
-    }
-
-    public static void incrementPower(ItemStack itemStack) {
-        int level = getPower(itemStack);
-        if(level >= 2) {
-            level = 2;
-        }
-        else {
-            level++;
-        }
-        setPower(itemStack, level);
-    }
-
-
-    public static Integer getImpaling(ItemStack itemStack) {
-        if(itemStack.contains(ModDataComponentType.IMPALING)) {
-            return itemStack.getOrDefault(ModDataComponentType.IMPALING, 0);
-        }
-        else {
-            return 0;
-        }
-    }
-
-    public static void setImpaling(ItemStack itemStack, int x) {
-        itemStack.set(ModDataComponentType.IMPALING, x);
-    }
-
-    public static void incrementImpaling(ItemStack itemStack) {
-        int level = getImpaling(itemStack);
-        if(level >= 2) {
-            level = 2;
-        }
-        else {
-            level++;
-        }
-        setImpaling(itemStack, level);
-    }
-
-
-    public static Integer getDensity(ItemStack itemStack) {
-        if(itemStack.contains(ModDataComponentType.DENSITY)) {
-            return itemStack.getOrDefault(ModDataComponentType.DENSITY, 0);
-        }
-        else {
-            return 0;
-        }
-    }
-
-    public static void setDensity(ItemStack itemStack, int x) {
-        itemStack.set(ModDataComponentType.DENSITY, x);
-    }
-
-    public static void incrementDensity(ItemStack itemStack) {
-        int level = getDensity(itemStack);
-        if(level >= 2) {
-            level = 2;
-        }
-        else {
-            level++;
-        }
-        setDensity(itemStack, level);
-    }
 
     public static boolean changeAttribute(ItemStack itemStack1, ItemStack itemStack2, ItemStack outputStack) {
-        boolean changed = false;
-        if(itemStack1.isIn(ItemTags.MINING_ENCHANTABLE) && itemStack2.isOf(Items.GOLD_INGOT)) {
-            Upgrade.incrementEfficiency(outputStack);
-            changed = true;
+        if (itemStack1.isIn(ItemTags.MINING_ENCHANTABLE) && itemStack2.isOf(Items.GOLD_INGOT)) {
+            return incrementEfficiency(outputStack);
+        } else if (itemStack1.isIn(ItemTags.ARMOR_ENCHANTABLE) && itemStack2.isOf(Items.IRON_INGOT)) {
+            return incrementProtection(outputStack);
+        } else if (itemStack1.isIn(ItemTags.SHARP_WEAPON_ENCHANTABLE) && itemStack2.isOf(Items.AMETHYST_SHARD)) {
+            return incrementSharpness(outputStack);
+        } else if (itemStack1.isIn(ItemTags.TRIDENT_ENCHANTABLE) && itemStack2.isOf(Items.AMETHYST_SHARD)) {
+            return incrementSharpness(outputStack);
+        } else if (itemStack1.isIn(ItemTags.MACE_ENCHANTABLE) && itemStack2.isOf(Items.AMETHYST_SHARD)) {
+            return incrementSharpness(outputStack);
         }
-        else if(itemStack1.isIn(ItemTags.ARMOR_ENCHANTABLE) && itemStack2.isOf(Items.IRON_INGOT)) {
-            Upgrade.incrementProtection(outputStack);
-            changed = true;
-        }
-        else if(itemStack1.isIn(ItemTags.SHARP_WEAPON_ENCHANTABLE) && itemStack2.isOf(Items.AMETHYST_SHARD)) {
-            Upgrade.incrementSharpness(outputStack);
-            changed = true;
-        }
-        else if((itemStack1.isIn(ItemTags.BOW_ENCHANTABLE) || itemStack1.isIn(ItemTags.CROSSBOW_ENCHANTABLE)) && itemStack2.isOf(Items.AMETHYST_SHARD)) {
-            Upgrade.incrementPower(outputStack);
-            changed = true;
-        }
-        else if(itemStack1.isIn(ItemTags.TRIDENT_ENCHANTABLE) && itemStack2.isOf(Items.AMETHYST_SHARD)) {
-            Upgrade.incrementSharpness(outputStack);
-            changed = true;
-        }
-        else if(itemStack1.isIn(ItemTags.MACE_ENCHANTABLE) && itemStack2.isOf(Items.AMETHYST_SHARD)) {
-            Upgrade.incrementSharpness(outputStack);
-            changed = true;
-        }
-        return changed;
+        return false;
     }
-
-
-
 }

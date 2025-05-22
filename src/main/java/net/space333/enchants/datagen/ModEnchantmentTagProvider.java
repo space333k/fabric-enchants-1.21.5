@@ -3,9 +3,9 @@ package net.space333.enchants.datagen;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.registry.RegistryWrapper;
-import net.space333.enchants.util.ModTags;
+import net.minecraft.registry.tag.EnchantmentTags;
+import net.space333.enchants.enchantment.ModEnchantments;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,14 +16,25 @@ public class ModEnchantmentTagProvider extends FabricTagProvider.EnchantmentTagP
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        getOrCreateTagBuilder(ModTags.Enchantments.MUTUAL_EXCLUSION)
-                .add(Enchantments.SILK_TOUCH)
-                .add(Enchantments.FORTUNE)
-                .add(Enchantments.CHANNELING)
-                .add(Enchantments.RIPTIDE)
-                .add(Enchantments.LOYALTY)
-                .add(Enchantments.INFINITY)
-                .add(Enchantments.MENDING);
+        getOrCreateTagBuilder(EnchantmentTags.ARMOR_EXCLUSIVE_SET)
+                .setReplace(true);
+        getOrCreateTagBuilder(EnchantmentTags.BOOTS_EXCLUSIVE_SET)
+                .setReplace(true);
+        getOrCreateTagBuilder(EnchantmentTags.CROSSBOW_EXCLUSIVE_SET)
+                .setReplace(true);
+        getOrCreateTagBuilder(EnchantmentTags.DAMAGE_EXCLUSIVE_SET)
+                .setReplace(true);
+
+        getOrCreateTagBuilder(EnchantmentTags.NON_TREASURE)
+                .setReplace(false)
+                .add(ModEnchantments.REACH);
+
+        getOrCreateTagBuilder(EnchantmentTags.ON_RANDOM_LOOT)
+                .add(ModEnchantments.SOULBOUND);
+        getOrCreateTagBuilder(EnchantmentTags.TOOLTIP_ORDER)
+                .add(ModEnchantments.SOULBOUND);
+        getOrCreateTagBuilder(EnchantmentTags.TREASURE)
+                .add(ModEnchantments.SOULBOUND);
 
     }
 }
