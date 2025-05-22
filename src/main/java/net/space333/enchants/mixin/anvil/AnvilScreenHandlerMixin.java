@@ -20,7 +20,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldEvents;
-import net.space333.enchants.Enchants;
 import net.space333.enchants.util.EnchantmentPowerHelper;
 import net.space333.enchants.util.ModTags;
 import net.space333.enchants.util.Upgrade;
@@ -190,7 +189,8 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
             repairCost = (int) MathHelper.clamp(repairCost, 0L, 2147483647L);
             this.levelCost.set(repairCost);
 
-            if (!validOutput || repairCost == 0) {
+            if ((!validOutput || repairCost <= 0) && !this.player.isInCreativeMode()) {
+                this.levelCost.set(1);
                 outStack = ItemStack.EMPTY;
             }
 
@@ -290,8 +290,8 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                 specialEnchantmentCost++;
             }
         }
-        if(enchantmentCost > EnchantmentPowerHelper.getMaxEnchantment(outStack)) {
-            return 0;
+        if(enchantmentCost > EnchantmentPowerHelper.getMaxEnchantmentPower(outStack)) {
+            return -1;
         }
 
         return upgradeCost + enchantmentCost * 2 + specialEnchantmentCost * 4 + 1;

@@ -1,5 +1,7 @@
 {
   "enchantment.enchants.soulbound": "Soul Bound",
   "enchantment.enchants.reach": "Reach",
-  "enchantment.enchants.excavator": "Excavator"
+  "enchantment.enchants.excavator": "Excavator",
+
+  "container.repair.tooEnchanted": "TOO ENCHANTED"
 }

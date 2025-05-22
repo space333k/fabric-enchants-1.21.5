@@ -1,5 +1,6 @@
 package net.space333.enchants.mixin.upgrades;
 
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -12,6 +13,7 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.space333.enchants.Component.ModDataComponentType;
+import net.space333.enchants.util.EnchantmentPowerHelper;
 import net.space333.enchants.util.Upgrade;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -75,6 +77,20 @@ public abstract class ItemStackMixin {
             CallbackInfo ci
     ) {
         ItemStack self = ((ItemStack)(Object)this);
+        //Add enchantment level
+        if(!self.contains(DataComponentTypes.STORED_ENCHANTMENTS) && self.contains(DataComponentTypes.ENCHANTABLE)) {
+            int currentPower = EnchantmentPowerHelper.getCurrentEnchantmentPower(self);
+            int maxPower = EnchantmentPowerHelper.getMaxEnchantmentPower(self);
+
+            if(currentPower > maxPower) {
+                textConsumer.accept(Text.literal("Enchanting Power: " + currentPower + "/" + maxPower).formatted(Formatting.RED));
+            }
+            else if(currentPower > 0) {
+                textConsumer.accept(Text.literal("Enchanting Power: " + currentPower + "/" + maxPower).formatted(Formatting.LIGHT_PURPLE));
+            }
+        }
+
+        //Upgrade tooltip
         if(self.contains(ModDataComponentType.UNBREAKING)) {
             int level = Upgrade.getUnbreaking(self);
             if(level > 0) {
