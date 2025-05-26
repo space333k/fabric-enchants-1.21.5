@@ -39,6 +39,8 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
         super(type, syncId);
     }
 
+
+
     @Inject(method = "generateEnchantments", at = @At(value = "HEAD"), cancellable = true)
     private void getEnchantment(DynamicRegistryManager registryManager, ItemStack stack, int slot, int level, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
         this.random.setSeed(this.seed.get() + slot);

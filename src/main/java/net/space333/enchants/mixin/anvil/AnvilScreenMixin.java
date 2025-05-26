@@ -1,19 +1,13 @@
-package net.space333.enchants.mixin.client;
+package net.space333.enchants.mixin.anvil;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.AnvilScreen;
-import net.minecraft.client.gui.screen.ingame.ForgingScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.screen.AnvilScreenHandler;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.space333.enchants.Enchants;
 import net.space333.enchants.util.EnchantmentPowerHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,7 +35,7 @@ public class AnvilScreenMixin {
     @Unique int BACKGROUND_COLOR = new Color(81, 81, 81).hashCode();
 
 
-    @Inject(method = "drawForeground", at = @At(value = "HEAD"))
+    @Inject(method = "drawForeground", at = @At(value = "TAIL"))
     private void drawBar(DrawContext context, int mouseX, int mouseY, CallbackInfo ci) {
 
         AnvilScreen self = (AnvilScreen) (Object) this;
@@ -67,7 +61,7 @@ public class AnvilScreenMixin {
         int modifierPower = EnchantmentPowerHelper.getCurrentEnchantmentPower(modifierStack);
         int outputPower = EnchantmentPowerHelper.getCurrentEnchantmentPower(outputStack);
 
-        if (!inputStack.isEmpty()) {
+        if (!inputStack.isEmpty() && !outputStack.isOf(Items.ENCHANTED_BOOK)) {
             context.fill(BAR_X1, BAR_Y1, barPos(inputPower, maxPower), BAR_Y2, INPUT_POWER_COLOR);
 
             if (inputPower > maxPower) {
@@ -89,8 +83,6 @@ public class AnvilScreenMixin {
 
         }
 
-
-
         for (int i = 1; i < maxPower; i++) {
             context.fill(barPos(i, maxPower) - 1, BAR_Y1+1, barPos(i, maxPower), BAR_Y2-1, DOT_COLOR);
         }
@@ -104,16 +96,6 @@ public class AnvilScreenMixin {
     private int newMax(int i, @Local(argsOnly = true) DrawContext context) {
         return 0;
     }
-    /*
-    @Redirect(method = "drawForeground", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/AnvilScreenHandler;getLevelCost()I"))
-    private int bypassCostCheck(AnvilScreenHandler instance) {
-        int cost = instance.getLevelCost();
-        if(cost == 0) {
-            return 1;
-        }
-        return cost;
-    }
-    */
 
     @Redirect(method = "drawForeground", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isInCreativeMode()Z"))
     private boolean tooEnchanted(ClientPlayerEntity instance) {
@@ -121,18 +103,22 @@ public class AnvilScreenMixin {
         AnvilScreenHandler screenHandler = self.getScreenHandler();
         ItemStack inputStack = ItemStack.EMPTY;
         ItemStack modifierStack = ItemStack.EMPTY;
+        ItemStack outputStack = ItemStack.EMPTY;
         if (screenHandler.getSlot(0).hasStack()) {
             inputStack = screenHandler.slots.get(0).getStack();
         }
         if (screenHandler.getSlot(1).hasStack()) {
             modifierStack = screenHandler.slots.get(1).getStack();
         }
+        if (screenHandler.getSlot(2).hasStack()) {
+            outputStack = screenHandler.slots.get(2).getStack();
+        }
 
         int maxPower = EnchantmentPowerHelper.getMaxEnchantmentPower(inputStack);
         int inputPower = EnchantmentPowerHelper.getCurrentEnchantmentPower(inputStack);
         int modifierPower = EnchantmentPowerHelper.getCurrentEnchantmentPower(modifierStack);
 
-        if(!inputStack.isEmpty() && !modifierStack.isEmpty()) {
+        if(!inputStack.isEmpty() && !modifierStack.isEmpty() && !outputStack.isOf(Items.ENCHANTED_BOOK)) {
             if ((inputPower + modifierPower) > maxPower) {
                 return instance.isInCreativeMode();
             }

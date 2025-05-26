@@ -1,10 +1,13 @@
 package net.space333.enchants.enchantment.custom;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import net.minecraft.component.Component;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -35,11 +38,14 @@ public class SoulBound {
     }
 
     private static void removeSoulbound(ItemStack itemStack) {
-        ItemEnchantmentsComponent itemEnchantmentsComponent = EnchantmentHelper.apply(
-                itemStack, components -> components.remove(
-                        enchantment -> enchantment.matchesKey(ModEnchantments.SOULBOUND)
-                )
-        );
+        if(!itemStack.isOf(Items.ENCHANTED_BOOK)) {
+            ItemEnchantmentsComponent itemEnchantmentsComponent = EnchantmentHelper.apply(
+                    itemStack, components -> components.remove(
+                            enchantment -> enchantment.matchesKey(ModEnchantments.SOULBOUND)
+                    )
+            );
+        }
+
     }
 
     public static boolean hasSoulbound(ItemStack itemStack) {

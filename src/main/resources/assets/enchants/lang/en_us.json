@@ -2,6 +2,10 @@
   "enchantment.enchants.soulbound": "Soul Bound",
   "enchantment.enchants.reach": "Reach",
   "enchantment.enchants.excavator": "Excavator",
+  "enchantment.enchants.magic_protection": "Magic Protection",
+  "enchantment.enchants.inhumain": "Inhumain",
 
-  "container.repair.tooEnchanted": "TOO ENCHANTED"
+  "container.repair.tooEnchanted": "TOO ENCHANTED",
+
+  "container.enchants.clue": "%s %s"
 }

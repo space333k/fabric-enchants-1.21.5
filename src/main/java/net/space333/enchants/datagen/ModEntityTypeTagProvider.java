@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.EntityTypeTags;
+import net.space333.enchants.util.ModTags;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -25,5 +26,13 @@ public class ModEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagPro
                 .add(EntityType.BLAZE)
                 .add(EntityType.VEX)
                 .add(EntityType.BREEZE);
+
+        getOrCreateTagBuilder(ModTags.EntityTypes.SENSITIVE_TO_INHUMAIN)
+                .add(EntityType.VILLAGER)
+                .add(EntityType.ZOMBIE_VILLAGER)
+                .add(EntityType.WITCH)
+                .add(EntityType.PLAYER)
+                .forceAddTag(EntityTypeTags.ILLAGER);
+
     }
 }

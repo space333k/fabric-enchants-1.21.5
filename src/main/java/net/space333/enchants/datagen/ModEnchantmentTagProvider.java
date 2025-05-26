@@ -27,7 +27,8 @@ public class ModEnchantmentTagProvider extends FabricTagProvider.EnchantmentTagP
 
         getOrCreateTagBuilder(EnchantmentTags.NON_TREASURE)
                 .setReplace(false)
-                .add(ModEnchantments.REACH);
+                .add(ModEnchantments.REACH)
+                .add(ModEnchantments.MAGIC_PROTECTION);
 
         getOrCreateTagBuilder(EnchantmentTags.ON_RANDOM_LOOT)
                 .add(ModEnchantments.SOULBOUND);

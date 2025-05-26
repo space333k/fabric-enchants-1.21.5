@@ -176,17 +176,24 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                 }
             }
 
+            repairCost = calculateCost(outStack);
+            if(itemStack2.isOf(Items.ENCHANTED_BOOK)) {
+                repairCost *= 2;
+            }
+            repairCost = (int) MathHelper.clamp(repairCost, 0L, 2147483647L);
+
             if (this.newItemName != null && !StringHelper.isBlank(this.newItemName)) {
                 if (!this.newItemName.equals(itemStack1.getName().getString())) {
                     outStack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(this.newItemName));
                     validOutput = true;
+                    repairCost = 1;
                 }
             } else if (itemStack1.contains(DataComponentTypes.CUSTOM_NAME)) {
                 outStack.remove(DataComponentTypes.CUSTOM_NAME);
                 validOutput = true;
+                repairCost = 1;
             }
-            repairCost = calculateCost(outStack);
-            repairCost = (int) MathHelper.clamp(repairCost, 0L, 2147483647L);
+
             this.levelCost.set(repairCost);
 
             if ((!validOutput || repairCost <= 0) && !this.player.isInCreativeMode()) {
@@ -242,7 +249,6 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         }
 
         EnchantmentHelper.set(outStack, builder.build());
-
         return bl3 && !bl2;
     }
 
@@ -290,7 +296,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                 specialEnchantmentCost++;
             }
         }
-        if(enchantmentCost > EnchantmentPowerHelper.getMaxEnchantmentPower(outStack)) {
+        if(enchantmentCost > EnchantmentPowerHelper.getMaxEnchantmentPower(outStack) && !outStack.isOf(Items.ENCHANTED_BOOK)) {
             return -1;
         }
 
