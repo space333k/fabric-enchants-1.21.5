@@ -1,4 +1,4 @@
-package net.space333.enchants.mixin.enchantments.soulbound;
+package net.space333.enchants.mixin.enchantments;
 
 import net.minecraft.entity.EntityEquipment;
 import net.minecraft.entity.EquipmentSlot;

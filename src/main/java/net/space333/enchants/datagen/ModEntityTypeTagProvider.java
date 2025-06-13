@@ -32,6 +32,7 @@ public class ModEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagPro
                 .add(EntityType.ZOMBIE_VILLAGER)
                 .add(EntityType.WITCH)
                 .add(EntityType.PLAYER)
+                .add(EntityType.WANDERING_TRADER)
                 .forceAddTag(EntityTypeTags.ILLAGER);
 
     }

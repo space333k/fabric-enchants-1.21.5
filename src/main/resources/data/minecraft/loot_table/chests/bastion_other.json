@@ -14,6 +14,21 @@
             },
             {
               "function": "minecraft:enchant_randomly",
+              "options": "enchants:berserker"
+            }
+          ],
+          "name": "minecraft:golden_axe"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_randomly",
               "options": "#minecraft:on_random_loot"
             }
           ],

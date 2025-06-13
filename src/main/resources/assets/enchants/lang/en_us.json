@@ -4,8 +4,16 @@
   "enchantment.enchants.excavator": "Excavator",
   "enchantment.enchants.magic_protection": "Magic Protection",
   "enchantment.enchants.inhumain": "Inhumain",
+  "enchantment.enchants.berserker": "Berserker",
+  "enchantment.enchants.syphon": "Syphon",
+
+  "item.enchants.duplication_tome": "Sister Tome",
+
+  "itemgroup.enchants.tome_items": "Tomes",
 
   "container.repair.tooEnchanted": "TOO ENCHANTED",
+  "container.enchants.clue": "%s %s",
 
-  "container.enchants.clue": "%s %s"
+  "enchantment.minecraft.bane_of_arthropods": "Bane of Invertebrate",
+  "container.repair.expensive": "TOO ENCHANTED!!"
 }

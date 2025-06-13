@@ -5,14 +5,15 @@
   "mixins": [
     "anvil.AnvilScreenHandlerMixin",
     "enchantments.EnchantmentMixin",
+    "enchantments.LivingEntityMixin",
     "enchantments.disableEnchantments.EnchantBookFactoryMixin",
     "enchantments.disableEnchantments.EnchantmentHelperMixin",
     "enchantments.disableEnchantments.EnchantmentScreenHandlerMixin",
     "enchantments.disableEnchantments.EnchantRandomlyLootFunctionMixin",
     "enchantments.disableEnchantments.ItemGroupMixin",
     "enchantments.disableEnchantments.SetEnchantmentsLootFunctionMixin",
-    "enchantments.reach.PlayerEntityMixin",
-    "enchantments.soulbound.PlayerInventoryMixin",
+    "enchantments.PlayerEntityMixin",
+    "enchantments.PlayerInventoryMixin",
     "upgrades.ItemStackMixin",
     "upgrades.LivingEntityMixin",
     "upgrades.PlayerEntityMixin"

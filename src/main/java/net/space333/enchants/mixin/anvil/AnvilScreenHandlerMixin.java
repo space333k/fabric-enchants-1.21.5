@@ -20,6 +20,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldEvents;
+import net.space333.enchants.Enchants;
+import net.space333.enchants.item.ModItems;
 import net.space333.enchants.util.EnchantmentPowerHelper;
 import net.space333.enchants.util.ModTags;
 import net.space333.enchants.util.Upgrade;
@@ -55,22 +57,27 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         if (!player.isInCreativeMode()) {
             player.addExperienceLevels(-this.levelCost.get());
         }
+        ItemStack itemStack1 = this.input.getStack(0);
+        ItemStack itemStack2 = this.input.getStack(1);
+
 
         if (this.repairItemUsage > 0) {
-            ItemStack itemStack = this.input.getStack(1);
-            if (!itemStack.isEmpty() && itemStack.getCount() > this.repairItemUsage) {
-                itemStack.decrement(this.repairItemUsage);
-                this.input.setStack(1, itemStack);
+            if (!itemStack2.isEmpty() && itemStack2.getCount() > this.repairItemUsage) {
+                itemStack2.decrement(this.repairItemUsage);
+                this.input.setStack(1, itemStack2);
             } else {
                 this.input.setStack(1, ItemStack.EMPTY);
             }
+            this.input.setStack(0, ItemStack.EMPTY);
         }
         else {
             this.input.setStack(1, ItemStack.EMPTY);
         }
 
-        this.levelCost.set(0);
+
         this.input.setStack(0, ItemStack.EMPTY);
+        this.levelCost.set(0);
+
         this.context.run((world, pos) -> {
             BlockState blockState = world.getBlockState(pos);
             if (!player.isInCreativeMode() && blockState.isIn(BlockTags.ANVIL) && player.getRandom().nextFloat() < 0.12F) {
@@ -163,6 +170,13 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                     }
                 }
 
+                if(itemStack1.isOf(Items.ENCHANTED_BOOK) && itemStack2.isOf(ModItems.DUPLICATION_TOME)) {
+                    outStack = itemStack1.copy();
+                    outStack.increment(1);
+                    validOutput = true;
+                }
+
+
                 boolean incompatibleEnchantments;
                 incompatibleEnchantments = combineEnchantments(itemStack1, itemStack2, outStack);
 
@@ -174,29 +188,28 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                 else if(itemStack2.contains(DataComponentTypes.STORED_ENCHANTMENTS) || itemStack1.isOf(itemStack2.getItem())){
                     validOutput = true;
                 }
-            }
 
-            repairCost = calculateCost(outStack);
-            if(itemStack2.isOf(Items.ENCHANTED_BOOK)) {
-                repairCost *= 2;
+                repairCost = calculateCost(outStack);
+                if(itemStack2.isOf(Items.ENCHANTED_BOOK)) {
+                    repairCost = (int) (((float) repairCost) * 1.5);
+                }
+                repairCost = (int) MathHelper.clamp(repairCost, 0L, 2147483647L);
             }
-            repairCost = (int) MathHelper.clamp(repairCost, 0L, 2147483647L);
 
             if (this.newItemName != null && !StringHelper.isBlank(this.newItemName)) {
                 if (!this.newItemName.equals(itemStack1.getName().getString())) {
                     outStack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(this.newItemName));
                     validOutput = true;
-                    repairCost = 1;
+                    repairCost += 1;
                 }
             } else if (itemStack1.contains(DataComponentTypes.CUSTOM_NAME)) {
                 outStack.remove(DataComponentTypes.CUSTOM_NAME);
                 validOutput = true;
-                repairCost = 1;
+                repairCost += 1;
             }
-
             this.levelCost.set(repairCost);
 
-            if ((!validOutput || repairCost <= 0) && !this.player.isInCreativeMode()) {
+            if (!validOutput || (repairCost <= 0 && !this.player.isInCreativeMode())) {
                 this.levelCost.set(1);
                 outStack = ItemStack.EMPTY;
             }

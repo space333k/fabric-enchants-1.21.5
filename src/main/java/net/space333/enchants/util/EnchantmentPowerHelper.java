@@ -11,6 +11,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.equipment.trim.ArmorTrim;
 import net.minecraft.item.equipment.trim.ArmorTrimMaterials;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.EnchantmentTags;
 
 public class EnchantmentPowerHelper {
 
@@ -22,6 +23,9 @@ public class EnchantmentPowerHelper {
             Enchantment enchantment = enchantmentRegistry.value();
             if (enchantment.getMaxLevel() > 1) {
                 power += entry.getIntValue();
+            }
+            else if(enchantmentRegistry.isIn(EnchantmentTags.CURSE)) {
+                power -= 2;
             }
         }
         return power;

@@ -12,6 +12,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.loot.condition.AllOfLootCondition;
 import net.minecraft.loot.condition.DamageSourcePropertiesLootCondition;
 import net.minecraft.loot.condition.EntityPropertiesLootCondition;
@@ -37,6 +38,8 @@ public class ModEnchantments {
     public static final RegistryKey<Enchantment> EXCAVATOR = of( "excavator");
     public static final RegistryKey<Enchantment> MAGIC_PROTECTION = of( "magic_protection");
     public static final RegistryKey<Enchantment> INHUMAIN = of( "inhumain");
+    public static final RegistryKey<Enchantment> BERSERKER = of( "berserker");
+    public static final RegistryKey<Enchantment> SYPHON = of( "syphon");
 
     public static void bootstrap(Registerable<Enchantment> registerable) {
         RegistryEntryLookup<DamageType> damageTypes = registerable.getRegistryLookup(RegistryKeys.DAMAGE_TYPE);
@@ -92,7 +95,6 @@ public class ModEnchantments {
                                 )
                         )
                         .exclusiveSet(registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT).getOrThrow(EnchantmentTags.MINING_EXCLUSIVE_SET))
-                        .addEffect(EnchantmentEffectComponentTypes.PREVENT_EQUIPMENT_DROP)
         );
         register(
                 registerable,
@@ -145,6 +147,36 @@ public class ModEnchantments {
                                         )
                                 )
                         )
+        );
+        register(
+                registerable,
+                BERSERKER,
+                Enchantment.builder(
+                                Enchantment.definition(
+                                        items.getOrThrow(ItemTags.AXES),
+                                        5,
+                                        3,
+                                        Enchantment.leveledCost(5, 12),
+                                        Enchantment.leveledCost(25, 12),
+                                        2,
+                                        AttributeModifierSlot.MAINHAND
+                                )
+                        )
+        );
+        register(
+                registerable,
+                SYPHON,
+                Enchantment.builder(
+                        Enchantment.definition(
+                                items.getOrThrow(ItemTags.TRIDENT_ENCHANTABLE),
+                                5,
+                                3,
+                                Enchantment.leveledCost(15, 15),
+                                Enchantment.leveledCost(30, 15),
+                                2,
+                                AttributeModifierSlot.MAINHAND
+                        )
+                )
         );
     }
 

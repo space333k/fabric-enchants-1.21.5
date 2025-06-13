@@ -1,4 +1,4 @@
-package net.space333.enchants.mixin.enchantments.reach;
+package net.space333.enchants.mixin.enchantments;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -19,6 +19,4 @@ public class PlayerEntityMixin {
         value += Reach.getReachLevel(itemStack) * 0.5;
         cir.setReturnValue(value);
     }
-
-
 }

@@ -12,8 +12,22 @@
               "options": "enchants:excavator"
             }
           ],
-          "name": "minecraft:book",
-          "weight": 1
+          "name": "minecraft:book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:enchant_randomly",
+              "options": "enchants:excavator"
+            }
+          ],
+          "name": "minecraft:iron_pickaxe"
         },
         {
           "type": "minecraft:empty",

@@ -50,7 +50,13 @@ public class Excavator {
                 }
                 else if(level == 3) {
                     for(int x = -1; x <= 1; x++) {
-                        getBlockLine(positions, initalBlockPos.add(x,0,0), playerFacing);
+                        if(playerFacing == Direction.NORTH || playerFacing == Direction.SOUTH) {
+                            getBlockLine(positions, initalBlockPos.add(x,0,0), playerFacing);
+                        }
+                        else if(playerFacing == Direction.EAST || playerFacing == Direction.WEST) {
+                            getBlockLine(positions, initalBlockPos.add(0,0,x), playerFacing);
+                        }
+
                     }
                 }
 

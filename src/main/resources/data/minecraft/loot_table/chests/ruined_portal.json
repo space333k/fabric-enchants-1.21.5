@@ -6,6 +6,10 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "enchants:duplication_tome"
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "add": false,

@@ -21,13 +21,6 @@ public class EnchantmentScreenMixin extends Screen {
         super(title);
     }
 
-    /*
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;getName(Lnet/minecraft/registry/entry/RegistryEntry;I)Lnet/minecraft/text/Text;"))
-    private Text removeName(RegistryEntry<Enchantment> enchantment, int level) {
-        return Text.literal("" + level);
-    }
-    */
-
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/text/Text;translatable(Ljava/lang/String;[Ljava/lang/Object;)Lnet/minecraft/text/MutableText;", ordinal = 0))
     private MutableText removeName(String key, Object[] args) {
         MutableText enchantmentText = (MutableText) args[0];

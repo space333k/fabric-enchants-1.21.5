@@ -6,6 +6,20 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "enchants:duplication_tome"
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 1
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "add": false,

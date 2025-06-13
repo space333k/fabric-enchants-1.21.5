@@ -35,7 +35,7 @@ public class AnvilScreenMixin {
     @Unique int BACKGROUND_COLOR = new Color(81, 81, 81).hashCode();
 
 
-    @Inject(method = "drawForeground", at = @At(value = "TAIL"))
+    @Inject(method = "drawForeground", at = @At(value = "HEAD"))
     private void drawBar(DrawContext context, int mouseX, int mouseY, CallbackInfo ci) {
 
         AnvilScreen self = (AnvilScreen) (Object) this;
@@ -73,14 +73,11 @@ public class AnvilScreenMixin {
                     context.fill(BAR_X1, BAR_Y1, barPos(0.5, maxPower), BAR_Y2, ILLEGAL_POWER_COLOR);
                 }
             }
-            if(!outputStack.isEmpty() && !this.player.isInCreativeMode()) {
+            if(!outputStack.isEmpty()) {
                 if (outputPower > inputPower) {
                     context.fill(barPos(inputPower, maxPower), BAR_Y1, barPos(outputPower, maxPower), BAR_Y2, OUTPUT_POWER_COLOR);
-                } else {
-                    context.fill(BAR_X1, BAR_Y1, barPos(inputPower, maxPower), BAR_Y2, INPUT_POWER_COLOR);
                 }
             }
-
         }
 
         for (int i = 1; i < maxPower; i++) {

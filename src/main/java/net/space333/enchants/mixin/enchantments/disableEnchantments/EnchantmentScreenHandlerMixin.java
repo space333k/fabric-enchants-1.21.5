@@ -27,11 +27,6 @@ import java.util.Optional;
 @Mixin(EnchantmentScreenHandler.class)
 public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 
-    @Shadow @Final private ScreenHandlerContext context;
-    @Shadow @Final private Inventory inventory;
-    @Shadow @Final public int[] enchantmentPower;
-    @Shadow @Final public int[] enchantmentId;
-    @Shadow @Final public int[] enchantmentLevel;
     @Shadow @Final private Property seed;
     @Shadow @Final private Random random;
 
